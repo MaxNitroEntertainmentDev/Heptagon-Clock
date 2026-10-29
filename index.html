@@ -117,7 +117,7 @@ html,body,text,button,input,select{font-feature-settings:var(--ff,normal);font-v
 <div class="title">YouTube Watch Schedule<small>EPG maker · Table · Grid · Agenda</small></div>
 <div class="sec">Now &amp; next</div><div class="cal" id="snx" style="width:min(94vw,820px)"></div>
 <div class="sec">Add a program</div><div class="cal" id="sfm" style="width:min(94vw,820px)"></div>
-<div class="sec">Schedule view</div><div class="btns"><div class="grp" style="justify-content:center"><button id="vw0">Table</button><button id="vw1">Grid (EPG)</button><button id="vw2">Agenda</button><button id="ssam">Load sample</button><button id="sclr">Clear all</button></div></div>
+<div class="sec">Schedule view</div><div class="btns"><div class="grp" style="justify-content:center"><button id="vw0">Table</button><button id="vw1">Grid (EPG)</button><button id="vw2">Agenda</button><button id="ef24">24-hour</button><button id="ef12">12-hour</button><button id="ssam">Load sample</button><button id="sclr">Clear all</button></div></div>
 <div class="cal" id="svw" style="width:min(98vw,860px);overflow-x:auto"></div>
 <div class="sec">Import / export (copy &amp; paste JSON)</div><div class="cal" style="width:min(94vw,820px)"><textarea id="sjs" rows="5" style="width:100%;font:12px monospace;box-sizing:border-box;border-radius:12px;padding:8px;border:1px solid var(--ring);background:var(--fill);color:var(--fg)"></textarea><div style="margin-top:8px"><button id="sexp">Export to box</button> <button id="simp">Import from box</button></div></div>
 </div>
@@ -236,25 +236,27 @@ const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",
 const ytUrl=u=>{u=(u||"").trim();return !u?"":/^https?:\/\//i.test(u)?u:"https://www.youtube.com/watch?v="+encodeURIComponent(u)};
 const mins=s=>{const a=(s||"0:0").split(":");return (+a[0])*60+(+a[1]||0)};
 const hm=m=>{m=((Math.round(m)%1440)+1440)%1440;return String(Math.floor(m/60)).padStart(2,"0")+":"+String(m%60).padStart(2,"0")};
+let EF=24;try{EF=+localStorage.getItem("hef")==12?12:24}catch(e){}
+const hd=m=>{m=((Math.round(m)%1440)+1440)%1440;if(EF==24)return hm(m);const h=Math.floor(m/60);return ((h+11)%12+1)+":"+String(m%60).padStart(2,"0")+" "+(h<12?"AM":"PM")};
 const dur=m=>{m=Math.round(m);const d=Math.floor(m/1440),h=Math.floor(m%1440/60);return (d?d+"d ":"")+(h?h+"h ":"")+(m%60)+"m"};
 function segs(){const o=[];SCH.forEach(p=>{const s=mins(p.st),e=s+p.du;p.days.forEach(d=>{o.push({p:p,d:d,s:s,e:Math.min(e,1440)});if(e>1440)o.push({p:p,d:(d+1)%7,s:0,e:e-1440,cont:true})})});return o}
 function schNow(){const n=getNow(),dow=n.getDay(),m=n.getHours()*60+n.getMinutes()+n.getSeconds()/60,sg=segs(),now=sg.find(x=>x.d==dow&&x.s<=m&&m<x.e);let nx=null,best=1e9;
  sg.forEach(x=>{let dd=((x.d-dow+7)%7)*1440+x.s-m;if(dd<=0)dd+=7*1440;if(dd<best&&!(now&&x.p===now.p&&x.d==now.d&&x.s==now.s)){best=dd;nx=x}});return {now:now,nx:nx,best:best,dow:dow,m:m}}
 function renderNext(){const el=document.getElementById("snx");if(!SCH.length){el.innerHTML='No programs yet. Add one below, or press <b>Load sample</b>.';return}const r=schNow();
- el.innerHTML='<div style="text-align:left;font-size:15px">'+(r.now?'<div>\u25b6 <b>Now:</b> '+thumb(r.now.p,"th tl")+'<span class="dot" style="background:'+esc(r.now.p.col)+'"></span>'+esc(r.now.p.t)+' <small>('+esc(r.now.p.c)+') until '+hm(r.now.e)+'</small></div>':'<div style="opacity:.7">Nothing scheduled right now.</div>')+(r.nx?'<div style="margin-top:6px">\u23ed <b>Next:</b> '+thumb(r.nx.p,"th tl")+'<span class="dot" style="background:'+esc(r.nx.p.col)+'"></span>'+esc(r.nx.p.t)+' <small>'+EN_D[r.nx.d]+' '+hm(r.nx.s)+'\u2013'+hm(r.nx.e)+' \u00b7 in '+dur(r.best)+'</small></div>':'')+'</div>'}
+ el.innerHTML='<div style="text-align:left;font-size:15px">'+(r.now?'<div>\u25b6 <b>Now:</b> '+thumb(r.now.p,"th tl")+'<span class="dot" style="background:'+esc(r.now.p.col)+'"></span>'+esc(r.now.p.t)+' <small>('+esc(r.now.p.c)+') until '+hd(r.now.e)+'</small></div>':'<div style="opacity:.7">Nothing scheduled right now.</div>')+(r.nx?'<div style="margin-top:6px">\u23ed <b>Next:</b> '+thumb(r.nx.p,"th tl")+'<span class="dot" style="background:'+esc(r.nx.p.col)+'"></span>'+esc(r.nx.p.t)+' <small>'+EN_D[r.nx.d]+' '+hd(r.nx.s)+'\u2013'+hd(r.nx.e)+' \u00b7 in '+dur(r.best)+'</small></div>':'')+'</div>'}
 function updNP(){const el=document.getElementById("np");if(!SCH.length){el.style.display="none";return}const r=schNow();el.style.display="";
- el.textContent=(r.now?"\u25b6 Now: "+r.now.p.t+" (until "+hm(r.now.e)+")":"No program now")+(r.nx?" \u00b7 Next: "+r.nx.p.t+" "+NE[r.nx.d]+" "+hm(r.nx.s)+" (in "+dur(r.best)+")":"")}
+ el.textContent=(r.now?"\u25b6 Now: "+r.now.p.t+" (until "+hd(r.now.e)+")":"No program now")+(r.nx?" \u00b7 Next: "+r.nx.p.t+" "+NE[r.nx.d]+" "+hd(r.nx.s)+" (in "+dur(r.best)+")":"")}
 function tableHTML(){if(!SCH.length)return '<div style="opacity:.7">No programs yet.</div>';let h='<table class="stb"><tr><th>Title</th><th>Channel</th><th>Days</th><th>Start</th><th>End</th><th>Min</th><th>Notes</th><th></th></tr>';
  SCH.slice().sort((a,b)=>mins(a.st)-mins(b.st)).forEach(p=>{const u=ytUrl(p.u),ds=[1,2,3,4,5,6,0].filter(d=>p.days.includes(d)).map(d=>NE[d][0]+NE[d].slice(1).toLowerCase()).join(", ");
-  h+='<tr><td>'+thumb(p,"th ts")+'<span class="dot" style="background:'+esc(p.col)+'"></span>'+(u?'<a href="'+esc(u)+'" target="_blank" rel="noopener">'+esc(p.t)+'</a>':esc(p.t))+'</td><td>'+esc(p.c)+'</td><td>'+ds+'</td><td>'+esc(p.st)+'</td><td>'+hm(mins(p.st)+p.du)+'</td><td>'+p.du+'</td><td>'+esc(p.n)+'</td><td><button data-act="edit" data-id="'+p.id+'">Edit</button> <button data-act="del" data-id="'+p.id+'">Delete</button></td></tr>'});return h+'</table>'}
+  h+='<tr><td>'+thumb(p,"th ts")+'<span class="dot" style="background:'+esc(p.col)+'"></span>'+(u?'<a href="'+esc(u)+'" target="_blank" rel="noopener">'+esc(p.t)+'</a>':esc(p.t))+'</td><td>'+esc(p.c)+'</td><td>'+ds+'</td><td>'+hd(mins(p.st))+'</td><td>'+hd(mins(p.st)+p.du)+'</td><td>'+p.du+'</td><td>'+esc(p.n)+'</td><td><button data-act="edit" data-id="'+p.id+'">Edit</button> <button data-act="del" data-id="'+p.id+'">Delete</button></td></tr>'});return h+'</table>'}
 function gridHTML(){const sg=segs(),n=getNow(),dow=n.getDay(),nm=n.getHours()*60+n.getMinutes();let h='<div class="egr"><div class="erow"><div class="elab"></div><div class="etr ehd">';
- for(let i=0;i<24;i++)h+='<span style="left:'+i*60+'px">'+String(i).padStart(2,"0")+'</span>';h+='</div></div>';
+ for(let i=0;i<24;i++)h+='<span style="left:'+i*60+'px">'+(EF==24?String(i).padStart(2,"0"):((i+11)%12+1)+(i<12?"a":"p"))+'</span>';h+='</div></div>';
  for(let j=0;j<7;j++){const d=(start+j)%7,row=sg.filter(x=>x.d==d).sort((a,b)=>a.s-b.s),lanes=[];let bl="";
   row.forEach(x=>{let l=lanes.findIndex(e=>e<=x.s);if(l<0){l=lanes.length;lanes.push(0)}lanes[l]=x.e;
-   bl+='<div class="eb" data-id="'+x.p.id+'" style="left:'+x.s+'px;width:'+Math.max(24,x.e-x.s)+'px;top:'+(l*58+3)+'px;background:'+esc(x.p.col)+'" title="'+esc(x.p.t)+' '+hm(x.s)+'-'+hm(x.e)+'">'+((x.e-x.s)>=120?thumb(x.p,"th tg"):"")+(x.cont?"\u21aa ":"")+esc(x.p.t)+'<br><small>'+hm(x.s)+'\u2013'+hm(x.e)+'</small></div>'});
+   bl+='<div class="eb" data-id="'+x.p.id+'" style="left:'+x.s+'px;width:'+Math.max(24,x.e-x.s)+'px;top:'+(l*58+3)+'px;background:'+esc(x.p.col)+'" title="'+esc(x.p.t)+' '+hd(x.s)+'-'+hd(x.e)+'">'+((x.e-x.s)>=120?thumb(x.p,"th tg"):"")+(x.cont?"\u21aa ":"")+esc(x.p.t)+'<br><small>'+hd(x.s)+'\u2013'+hd(x.e)+'</small></div>'});
   h+='<div class="erow"><div class="elab">'+NE[d]+'</div><div class="etr" style="height:'+(Math.max(1,lanes.length)*58+6)+'px">'+bl+(d==dow?'<div class="enow" style="left:'+nm+'px"></div>':'')+'</div></div>'}return h+'</div>'}
 function agendaHTML(){const sg=segs(),nw=schNow();let h="";for(let j=0;j<7;j++){const d=(start+j)%7,r=sg.filter(x=>x.d==d).sort((a,b)=>a.s-b.s);h+='<div class="ag"><b>'+EN_D[d]+(d==nw.dow?' \u00b7 today':'')+'</b>';if(!r.length)h+='<div class="ai" style="opacity:.5">\u2014</div>';
-  r.forEach(x=>{const on=nw.now&&nw.now.p===x.p&&nw.now.d==x.d&&nw.now.s==x.s;h+='<div class="ai'+(on?' now':'')+'" style="border-left:6px solid '+esc(x.p.col)+'" data-id="'+x.p.id+'">'+thumb(x.p,"th ta")+'<b>'+hm(x.s)+'\u2013'+hm(x.e)+'</b> '+esc(x.p.t)+' <small>'+esc(x.p.c)+'</small>'+(on?' <span class="live">\u25b6 NOW</span>':'')+'</div>'});h+='</div>'}return h}
+  r.forEach(x=>{const on=nw.now&&nw.now.p===x.p&&nw.now.d==x.d&&nw.now.s==x.s;h+='<div class="ai'+(on?' now':'')+'" style="border-left:6px solid '+esc(x.p.col)+'" data-id="'+x.p.id+'">'+thumb(x.p,"th ta")+'<b>'+hd(x.s)+'\u2013'+hd(x.e)+'</b> '+esc(x.p.t)+' <small>'+esc(x.p.c)+'</small>'+(on?' <span class="live">\u25b6 NOW</span>':'')+'</div>'});h+='</div>'}return h}
 function renderViews(){document.getElementById("svw").innerHTML=SVIEW=="table"?tableHTML():SVIEW=="grid"?gridHTML():agendaHTML();["table","grid","agenda"].forEach((v,i)=>document.getElementById("vw"+i).classList.toggle("on",SVIEW==v))}
 function ytId(u){u=(u||"").trim();const m=u.match(/(?:[?&]v=|youtu\.be\/|shorts\/|embed\/|live\/|\/v\/)([A-Za-z0-9_-]{11})/);if(m)return m[1];return /^[A-Za-z0-9_-]{11}$/.test(u)?u:""}
 function thumb(p,c){const id=ytId(p.u),s=p.img||(id?"https://i.ytimg.com/vi/"+id+"/mqdefault.jpg":"");
@@ -595,6 +597,8 @@ setW(S.wd!==undefined?S.wd:"my");if(S.cj)PACKS.custom=S.cj;if(S.lang=="lw"){appl
 if(S.fd){fi.value=S.font||"";loadFD(S.fd)}else if(S.font){fi.value=S.font;setFont(S.font)}
 if(S.ff){fss.value=S.ff.s;fli.checked=S.ff.l;fdl.checked=S.ff.d;fca.checked=S.ff.c;ffx.value=S.ff.x}applyFF();
 buildTZ();if(S.tz){TZ=S.tz;tzs.value=TZ}buildPray(S.pt);buildSun(S.sun,S.pd);setD(S.df||"long");if(S.cd)CD=S.cd;buildCD();setLY(S.ly||"all");if(S.hs)HS=S.hs;buildHide();tick();
-window.addEventListener("hashchange",route);route();updNP();
+function setEF(v){EF=v;try{localStorage.setItem("hef",v)}catch(e){}ef24.classList.toggle("on",v==24);ef12.classList.toggle("on",v==12);renderViews();renderNext();updNP()}
+ef24.onclick=()=>setEF(24);ef12.onclick=()=>setEF(12);
+window.addEventListener("hashchange",route);route();updNP();setEF(EF);
 setInterval(()=>{updNP();if(!pgSched.hidden){renderNext();if(++SK%20==0)renderViews()}},1000);
 </script></body></html>
