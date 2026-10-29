@@ -62,6 +62,7 @@ details{background:var(--fill);border:1px solid rgba(128,128,128,.3);border-radi
 .sf{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center}.sf input:not([type=checkbox]){font:inherit;padding:7px 10px;border:1px solid var(--ring);border-radius:12px;background:var(--fill);color:var(--fg);box-sizing:border-box}
 .stb{width:100%;border-collapse:collapse;font-size:13px;text-align:left}.stb th,.stb td{padding:6px 8px;border-bottom:1px solid rgba(128,128,128,.3);vertical-align:top}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
 .elab,.eb,.ai,.ag>b,.stb td,.stb th{unicode-bidi:plaintext}
+.eb.fb{background:repeating-linear-gradient(45deg,rgba(128,128,128,.2) 0 6px,rgba(128,128,128,.08) 6px 12px);color:var(--fg);text-shadow:none;border:2px dashed rgba(128,128,128,.6);box-shadow:none;cursor:default;border-radius:14px;font-size:11px}.ai.fl{opacity:.65;cursor:default;background:transparent}
 .egr{min-width:max-content;font-size:11px}.erow{display:flex;border-bottom:1px solid rgba(128,128,128,.25)}.elab{width:var(--lw,56px);flex:none;position:sticky;left:0;background:var(--fill);z-index:3;font-weight:800;padding:8px 4px;text-align:left;box-sizing:border-box;font-size:12px;line-height:1.25}
 .etr{position:relative;width:1440px;flex:none;background:repeating-linear-gradient(90deg,transparent 0 59px,rgba(128,128,128,.3) 59px 60px)}.ehd{height:22px}.ehd span{position:absolute;top:3px;padding-left:3px;font-weight:700}
 .eb{position:absolute;height:54px;border-radius:8px;color:#fff;padding:2px 6px;overflow:hidden;white-space:nowrap;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.35);box-sizing:border-box;line-height:1.15;text-shadow:0 1px 2px rgba(0,0,0,.4)}.enow{position:absolute;top:0;bottom:0;width:2px;background:var(--accent);z-index:2}
@@ -119,7 +120,7 @@ html,body,text,button,input,select{font-feature-settings:var(--ff,normal);font-v
 <div class="sec" data-t="Now &amp; next">Now &amp; next</div><div class="cal" id="snx" style="width:min(94vw,820px)"></div>
 <div class="sec" data-t="Add a program">Add a program</div><div class="cal" id="sfm" style="width:min(94vw,820px)"></div>
 <div class="sec" data-t="Schedule view">Schedule view</div><div class="btns"><div class="grp" style="justify-content:center"><button id="vw0">Table</button><button id="vw1">Grid (EPG)</button><button id="vw2">Agenda</button><button id="ef24">24-hour</button><button id="ef12">12-hour</button><button id="ssam">Load sample</button><button id="sclr">Clear all</button></div>
-<div class="grp"><span data-t="Layout">Layout</span><button id="el0">Daily rows</button><button id="el1">TV strip</button><button id="el2">Channels</button></div>
+<div class="grp"><span data-t="Layout">Layout</span><button id="el0">Daily rows</button><button id="el1">TV strip</button><button id="el2">Channels</button><button id="efl">Filler</button></div>
 <div class="grp"><span data-t="Day labels">Day labels</span><button id="ed0">Mon–Fri · Sat &amp; Sun</button><button id="ed1">Monday–Friday · Saturday–Sunday</button></div>
 <div class="grp" id="grpDay" style="display:none"><span data-t="Day">Day</span><select id="ecd" style="font:inherit;padding:6px 10px;border-radius:999px;border:1px solid var(--ring);background:var(--fill);color:var(--fg)"></select></div>
 <div class="grp" id="grpShow"><span data-t="Show days">Show days</span><button id="ep0">All days</button><button id="ep1">Mon–Fri</button><button id="ep2">Sat &amp; Sun</button><div id="edc" style="width:100%;display:flex;flex-wrap:wrap;gap:6px 12px;font-size:13px"></div></div></div>
@@ -277,6 +278,8 @@ Delete|Hapus|Eliminar|Supprimer|Löschen|削除|删除|Padam
 Export to box|Ekspor ke kotak|Exportar al cuadro|Exporter vers la zone|In Feld exportieren|ボックスへ出力|导出到文本框|Eksport ke kotak
 Import from box|Impor dari kotak|Importar desde el cuadro|Importer depuis la zone|Aus Feld importieren|ボックスから読み込む|从文本框导入|Import dari kotak`.split("\n").map(r=>r.split("|")),EPG_MS={};EPGR.forEach(r=>{EPG_MS[r[0]]=r[7]});
 EPGR.push("Other|Lain|Otro|Autre|Andere|その他|其他|Lain".split("|"),"Channels|Saluran|Canales|Chaînes|Sender|チャンネル別|按频道|Saluran".split("|"),"Day|Hari|Día|Jour|Tag|曜日|星期|Hari".split("|"),"Today|Hari ini|Hoy|Aujourd'hui|Heute|今日|今天|Hari ini".split("|"));EPGR.forEach(r=>{EPG_MS[r[0]]=r[7]});
+EPGR.push("Duplicate|Gandakan|Duplicar|Dupliquer|Duplizieren|複製|复制|Duplikasi".split("|"),"copy|salinan|copia|copie|Kopie|コピー|副本|salinan".split("|"));EPGR.forEach(r=>{EPG_MS[r[0]]=r[7]});
+EPGR.push("Filler|Pengisi|Relleno|Intermède|Lückenfüller|つなぎ番組|填充节目|Pengisi".split("|"));EPGR.forEach(r=>{EPG_MS[r[0]]=r[7]});
 let EPGD=null;const T=s=>(EPGD&&EPGD[s])||s;
 let TD=null,TR=null;
 function mkTR(){if(!TD){TR=null;return}const ks=Object.keys(TD).sort((a,b)=>b.length-a.length).map(k=>k.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"));TR=new RegExp("(^|[^A-Za-z])("+ks.join("|")+")(?![A-Za-z])","g")}
@@ -318,13 +321,17 @@ function renderNext(){const el=document.getElementById("snx");if(!SCH.length){el
 function updNP(){const el=document.getElementById("np");if(!SCH.length){el.style.display="none";return}const r=schNow();el.style.display="";
  el.textContent=(r.now?"\u25b6 "+T("Now:")+" "+r.now.p.t+" ("+T("until")+" "+hd(r.now.e)+")":T("No program now"))+(r.nx?" \u00b7 "+T("Next:")+" "+r.nx.p.t+" "+eDay(r.nx.d,true)+" "+hd(r.nx.s)+" ("+T("in")+" "+durL(r.best)+")":"")}
 const CH=[{n:"MDMA Premier",c:"#2f6fe0"},{n:"MDMA Variety",c:"#f08a1c"},{n:"MDMA Extremes",c:"#8a8f98"},{n:"MDMA Traditional",c:"#9be08c"}];
-let ECDAY=-1,EMODE="chan",ELAB="short",EDAYS=[true,true,true,true,true,true,true];const EORD=[1,2,3,4,5,6,0];
-try{const o=JSON.parse(localStorage.getItem("hes")||"{}");if(o.m)EMODE=o.m;if(o.l)ELAB=o.l;if(typeof o.c=="number")ECDAY=o.c;if(Array.isArray(o.d)&&o.d.length==7&&o.d.some(Boolean))EDAYS=o.d.map(Boolean)}catch(e){}
-const eSave=()=>{try{localStorage.setItem("hes",JSON.stringify({m:EMODE,l:ELAB,d:EDAYS,c:ECDAY}))}catch(e){}};
+let EFILL=true,ECDAY=-1,EMODE="chan",ELAB="short",EDAYS=[true,true,true,true,true,true,true];const EORD=[1,2,3,4,5,6,0];
+try{const o=JSON.parse(localStorage.getItem("hes")||"{}");if(o.m)EMODE=o.m;if(o.l)ELAB=o.l;if(typeof o.c=="number")ECDAY=o.c;if(typeof o.f=="boolean")EFILL=o.f;if(Array.isArray(o.d)&&o.d.length==7&&o.d.some(Boolean))EDAYS=o.d.map(Boolean)}catch(e){}
+const eSave=()=>{try{localStorage.setItem("hes",JSON.stringify({m:EMODE,l:ELAB,d:EDAYS,c:ECDAY,f:EFILL}))}catch(e){}};
 function eLabel(ds,sty){sty=sty||ELAB;const ix=EORD.map((d,i)=>ds.includes(d)?i:-1).filter(i=>i>=0),L=sty=="long",nm=d=>eDay(d,!L);if(!ix.length)return "";if(ix.length==7)return T(L?"Every day":"Daily");
  const runs=[];ix.forEach(i=>{const r=runs[runs.length-1];if(r&&r[1]==i-1)r[1]=i;else runs.push([i,i])});
  return runs.map(r=>{const a=EORD[r[0]],b=EORD[r[1]];return r[0]==r[1]?nm(a):(r[1]==r[0]+1&&!L)?ePair(nm(a),nm(b)):nm(a)+"\u2013"+nm(b)}).join(", ")}
 const dark=c=>{const m=/^#?([0-9a-f]{6})$/i.exec(c||"");if(!m)return false;const n=parseInt(m[1],16);return .299*(n>>16)+.587*(n>>8&255)+.114*(n&255)>170},gl=g=>g.label||eLabel(g.days);
+const FILLN={"MDMA Premier":["News Ticker","Weather Update","Station ID"],"MDMA Variety":["Clip Show","Fun Facts","Music Videos"],"MDMA Extremes":["Highlights Reel","Stunt Replays","Trail Cam Loop"],"MDMA Traditional":["Folk Music Loop","Craft Corner","Heritage Photos"]};
+function fillGaps(g){const nm=FILLN[g.label]||[T("Filler"),"Station ID","Music Loop"],iv=g.rows.map(x=>[x.s,x.e]).sort((a,b)=>a[0]-b[0]),gaps=[],o=[];let t=0,k=0;
+ iv.forEach(r=>{if(r[0]-t>=5)gaps.push([t,r[0]]);t=Math.max(t,r[1])});if(1440-t>=5)gaps.push([t,1440]);
+ gaps.forEach(q=>{let a=q[0];while(a<q[1]){let len=Math.min(60,q[1]-a);if(q[1]-a-len>0&&q[1]-a-len<15)len=q[1]-a;o.push({s:a,e:a+len,n:nm[k++%nm.length],col:g.col||""});a+=len}});return o}
 function eChan(sg){const dw=ECDAY<0?getNow().getDay():ECDAY,here=sg.filter(x=>x.d==dw),names=CH.map(c=>c.n);here.forEach(x=>{const c=x.p.c||"";if(!names.includes(c))names.push(c)});
  return names.map(n=>({days:[dw],label:n||T("Other"),col:(CH.find(c=>c.n==n)||{}).c||"",rows:here.filter(x=>(x.p.c||"")==n).sort((a,b)=>a.s-b.s)})).filter(g=>g.rows.length||CH.some(c=>c.n==g.label))}
 function eGroups(sg){if(EMODE=="chan")return eChan(sg);const days=EORD.filter(d=>EDAYS[d]),one=d=>sg.filter(x=>x.d==d).sort((a,b)=>a.s-b.s);
@@ -333,17 +340,21 @@ function eGroups(sg){if(EMODE=="chan")return eChan(sg);const days=EORD.filter(d=
  let a=[...map.values()];const ne=a.filter(g=>g.rows.length);return ne.length?ne:a}
 function tableHTML(){const list=SCH.filter(p=>p.days.some(d=>EDAYS[d]));if(!list.length)return '<div style="opacity:.7">'+esc(T("No programs yet."))+'</div>';let h='<table class="stb"><tr><th>'+esc(T("Title"))+'</th><th>'+esc(T("Channel"))+'</th><th>'+esc(T("Days"))+'</th><th>'+esc(T("Start"))+'</th><th>'+esc(T("End"))+'</th><th>'+esc(T("Min"))+'</th><th>'+esc(T("Notes"))+'</th><th></th></tr>';
  list.sort((a,b)=>mins(a.st)-mins(b.st)).forEach(p=>{const u=ytUrl(p.u),ds=eLabel(p.days.filter(d=>EDAYS[d]));
-  h+='<tr><td>'+thumb(p,"th ts")+'<span class="dot" style="background:'+esc(p.col)+'"></span>'+(u?'<a href="'+esc(u)+'" target="_blank" rel="noopener">'+esc(p.t)+'</a>':esc(p.t))+'</td><td>'+esc(p.c)+'</td><td>'+ds+'</td><td>'+hd(mins(p.st))+'</td><td>'+hd(mins(p.st)+p.du)+'</td><td>'+p.du+'</td><td>'+esc(p.n)+'</td><td><button data-act="edit" data-id="'+p.id+'">'+esc(T("Edit"))+'</button> <button data-act="del" data-id="'+p.id+'">'+esc(T("Delete"))+'</button></td></tr>'});return h+'</table>'}
+  h+='<tr><td>'+thumb(p,"th ts")+'<span class="dot" style="background:'+esc(p.col)+'"></span>'+(u?'<a href="'+esc(u)+'" target="_blank" rel="noopener">'+esc(p.t)+'</a>':esc(p.t))+'</td><td>'+esc(p.c)+'</td><td>'+ds+'</td><td>'+hd(mins(p.st))+'</td><td>'+hd(mins(p.st)+p.du)+'</td><td>'+p.du+'</td><td>'+esc(p.n)+'</td><td><button data-act="edit" data-id="'+p.id+'">'+esc(T("Edit"))+'</button> <button data-act="dup" data-id="'+p.id+'">'+esc(T("Duplicate"))+'</button> <button data-act="del" data-id="'+p.id+'">'+esc(T("Delete"))+'</button></td></tr>'});return h+'</table>'}
 function gridHTML(){const sg=segs(),n=getNow(),dow=n.getDay(),nm=n.getHours()*60+n.getMinutes(),gs=eGroups(sg),lw=Math.min(200,Math.max(56,Math.max(0,...gs.map(g=>gl(g).length))*7.5+16));
  let h='<div class="egr" style="--lw:'+lw+'px"><div class="erow"><div class="elab">'+(EMODE=="chan"&&gs.length?esc(eDay(gs[0].days[0],true)):"")+'</div><div class="etr ehd">';
  for(let i=0;i<24;i++)h+='<span style="left:'+i*60+'px">'+(EF==24?String(i).padStart(2,"0"):((i+11)%12+1)+(lang=="en"?(i<12?"a":"p"):""))+'</span>';h+='</div></div>';
  gs.forEach(g=>{const lanes=[];let bl="";
   g.rows.forEach(x=>{let l=lanes.findIndex(e=>e<=x.s);if(l<0){l=lanes.length;lanes.push(0)}lanes[l]=x.e;
    bl+='<div class="eb" data-id="'+x.p.id+'" style="left:'+x.s+'px;width:'+Math.max(24,x.e-x.s)+'px;top:'+(l*58+3)+'px;background:'+esc(x.p.col)+(dark(x.p.col)?';color:#12301a;text-shadow:none':'')+'" title="'+esc(x.p.t)+' '+hd(x.s)+'-'+hd(x.e)+'">'+((x.e-x.s)>=120?thumb(x.p,"th tg"):"")+(x.cont?"\u21aa ":"")+esc(x.p.t)+'<br><small>'+hd(x.s)+'\u2013'+hd(x.e)+'</small></div>'});
+  if(EFILL)fillGaps(g).forEach(f=>{bl+='<div class="eb fb" style="left:'+f.s+'px;width:'+(f.e-f.s)+'px;top:3px'+(f.col?';border-color:'+esc(f.col):'')+'" title="'+esc(f.n)+' '+hd(f.s)+'-'+hd(f.e)+'">'+esc(f.n)+'<br><small>'+hd(f.s)+'\u2013'+hd(f.e)+'</small></div>'});
   h+='<div class="erow"><div class="elab"'+(g.col?' style="border-left:6px solid '+esc(g.col)+'"':'')+'>'+esc(gl(g))+'</div><div class="etr" style="height:'+(Math.max(1,lanes.length)*58+6)+'px">'+bl+(g.days.includes(dow)?'<div class="enow" style="left:'+nm+'px"></div>':'')+'</div></div>'});return h+'</div>'}
 function agendaHTML(){const sg=segs(),nw=schNow();let h="";
- eGroups(sg).forEach(g=>{h+='<div class="ag"><b>'+esc(g.label?g.label+" \u00b7 "+eDay(g.days[0]):eLabel(g.days))+(g.days.includes(nw.dow)?' \u00b7 '+esc(T("today")):'')+'</b>';if(!g.rows.length)h+='<div class="ai" style="opacity:.5">\u2014</div>';
-  g.rows.forEach(x=>{const on=g.days.includes(nw.dow)&&nw.now&&nw.now.p===x.p&&nw.now.s==x.s&&nw.now.e==x.e;h+='<div class="ai'+(on?' now':'')+'" style="border-left:6px solid '+esc(x.p.col)+'" data-id="'+x.p.id+'">'+thumb(x.p,"th ta")+'<b>'+hd(x.s)+'\u2013'+hd(x.e)+'</b> '+esc(x.p.t)+' <small>'+esc(x.p.c)+'</small>'+(on?' <span class="live">\u25b6 '+esc(T("NOW"))+'</span>':'')+'</div>'});h+='</div>'});return h}
+ eGroups(sg).forEach(g=>{h+='<div class="ag"><b>'+esc(g.label?g.label+" \u00b7 "+eDay(g.days[0]):eLabel(g.days))+(g.days.includes(nw.dow)?' \u00b7 '+esc(T("today")):'')+'</b>';
+  const items=g.rows.map(x=>({x:x,s:x.s})).concat(EFILL?fillGaps(g).map(f=>({f:f,s:f.s})):[]).sort((a,b)=>a.s-b.s);if(!items.length)h+='<div class="ai" style="opacity:.5">\u2014</div>';
+  items.forEach(it=>{if(it.f){const f=it.f;h+='<div class="ai fl" style="border-left:6px dashed '+esc(f.col||"#888")+'"><b>'+hd(f.s)+'\u2013'+hd(f.e)+'</b> '+esc(f.n)+' <small>'+esc(T("Filler"))+'</small></div>';return}
+   const x=it.x,on=g.days.includes(nw.dow)&&nw.now&&nw.now.p===x.p&&nw.now.s==x.s&&nw.now.e==x.e;h+='<div class="ai'+(on?' now':'')+'" style="border-left:6px solid '+esc(x.p.col)+'" data-id="'+x.p.id+'">'+thumb(x.p,"th ta")+'<b>'+hd(x.s)+'\u2013'+hd(x.e)+'</b> '+esc(x.p.t)+' <small>'+esc(x.p.c)+'</small>'+(on?' <span class="live">\u25b6 '+esc(T("NOW"))+'</span>':'')+'</div>'});
+  h+='</div>'});return h}
 function renderViews(){document.getElementById("svw").innerHTML=SVIEW=="table"?tableHTML():SVIEW=="grid"?gridHTML():agendaHTML();["table","grid","agenda"].forEach((v,i)=>document.getElementById("vw"+i).classList.toggle("on",SVIEW==v))}
 function ytId(u){u=(u||"").trim();const m=u.match(/(?:[?&]v=|youtu\.be\/|shorts\/|embed\/|live\/|\/v\/)([A-Za-z0-9_-]{11})/);if(m)return m[1];return /^[A-Za-z0-9_-]{11}$/.test(u)?u:""}
 function thumb(p,c){const id=ytId(p.u),s=p.img||(id?"https://i.ytimg.com/vi/"+id+"/mqdefault.jpg":"");
@@ -354,18 +365,20 @@ let SIMG="";
 (function(){const i=new Image();i.onload=()=>{YTOK=true;if(!pgSched.hidden)renderViews()};i.onerror=()=>{YTOK=false};i.src="https://i.ytimg.com/vi/dQw4w9WgXcQ/default.jpg"})();
 function showIP(){const e=document.getElementById("s_ip");e.innerHTML=SIMG?'<img class="th ts" src="'+SIMG+'" alt=""> <button id="s_ir">Remove</button>':'';if(SIMG)document.getElementById("s_ir").onclick=()=>{SIMG="";showIP()}}
 function thumbFile(f){if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const c=document.createElement("canvas");c.width=320;c.height=180;const x=c.getContext("2d"),s=Math.max(320/im.width,180/im.height),w=im.width*s,h=im.height*s;x.drawImage(im,(320-w)/2,(180-h)/2,w,h);SIMG=c.toDataURL("image/jpeg",.72);showIP()};im.src=r.result};r.readAsDataURL(f)}
+function dupProg(id){const p=SCH.find(x=>x.id==id);if(!p)return;const o=JSON.parse(JSON.stringify(p));o.id=String(Date.now())+Math.random().toString(36).slice(2,5);o.t=p.t+" ("+T("copy")+")";
+ SCH.push(o);sSave();SEDIT=o.id;buildForm();renderNext();renderViews();updNP();window.scrollTo(0,0)}
 function buildForm(){const p=SCH.find(x=>x.id==SEDIT)||{t:"",u:"",c:"",days:[1,2,3,4,5],st:"19:00",du:60,col:"#2f8fff",n:""};
  SIMG=p.img||"";document.getElementById("sfm").innerHTML='<div class="sf"><input id="s_t" placeholder="'+esc(T("Program title"))+'" value="'+esc(p.t)+'"><input id="s_u" placeholder="'+esc(T("YouTube link or video ID"))+'" value="'+esc(p.u)+'"><select id="s_ch" style="font:inherit;padding:7px 10px;border:1px solid var(--ring);border-radius:12px;background:var(--fill);color:var(--fg)">'+CH.map(c=>'<option value="'+esc(c.n)+'"'+(p.c==c.n?' selected':'')+'>'+esc(c.n)+'</option>').join('')+'<option value=""'+(CH.some(c=>c.n==p.c)?'':' selected')+'>'+esc(T("Other"))+'</option></select><input id="s_c" placeholder="'+esc(T("Channel / label"))+'" value="'+esc(p.c)+'"></div>'+
   '<div class="sf" style="margin-top:8px">'+[1,2,3,4,5,6,0].map(d=>'<label><input type="checkbox" class="sd" value="'+d+'"'+(p.days.includes(d)?' checked':'')+'> '+eDay(d,true)+'</label>').join('')+'</div>'+
   '<div class="sf" style="margin-top:8px"><label>'+esc(T("Start"))+' <input id="s_s" type="time" value="'+esc(p.st)+'"></label><label>'+esc(T("End"))+' <input id="s_e" type="time" value="'+hm(mins(p.st)+p.du)+'"></label><label>'+esc(T("Minutes"))+' <input id="s_d" type="number" min="5" max="1440" step="5" style="width:80px" value="'+p.du+'"></label><label>'+esc(T("Colour"))+' <input id="s_k" type="color" value="'+esc(p.col)+'"></label><label>'+esc(T("Thumbnail"))+' <input id="s_i" type="file" accept="image/*" style="max-width:190px"></label><span id="s_ip"></span><input id="s_n" placeholder="'+esc(T("Notes"))+'" value="'+esc(p.n)+'"></div>'+
-  '<div style="margin-top:10px"><button id="s_add">'+esc(T(SEDIT?"Update program":"Add to schedule"))+'</button>'+(SEDIT?' <button id="s_cx">'+esc(T("Cancel"))+'</button>':'')+'</div><div id="s_err" style="color:var(--accent);font-size:12px;margin-top:4px"></div>';
+  '<div style="margin-top:10px"><button id="s_add">'+esc(T(SEDIT?"Update program":"Add to schedule"))+'</button>'+(SEDIT?' <button id="s_dup">'+esc(T("Duplicate"))+'</button> <button id="s_cx">'+esc(T("Cancel"))+'</button>':'')+'</div><div id="s_err" style="color:var(--accent);font-size:12px;margin-top:4px"></div>';
  document.getElementById("s_add").onclick=()=>{const t=s_t.value.trim(),ds=[...document.querySelectorAll(".sd:checked")].map(x=>+x.value);if(!t||!ds.length){s_err.textContent=T("Enter a title and tick at least one day.");return}
   const o={id:SEDIT||String(Date.now())+Math.random().toString(36).slice(2,5),t:t,u:s_u.value.trim(),c:s_c.value.trim(),days:ds,st:s_s.value||"00:00",du:Math.max(5,Math.min(1440,+s_d.value||60)),col:s_k.value,n:s_n.value.trim(),img:SIMG};
   const i=SCH.findIndex(x=>x.id==o.id);if(i>=0)SCH[i]=o;else SCH.push(o);SEDIT=null;sSave();buildForm();renderNext();renderViews();updNP()};
- if(SEDIT)document.getElementById("s_cx").onclick=()=>{SEDIT=null;buildForm()};s_i.onchange=()=>thumbFile(s_i.files[0]);
+ if(SEDIT){document.getElementById("s_cx").onclick=()=>{SEDIT=null;buildForm()};document.getElementById("s_dup").onclick=()=>dupProg(SEDIT)};s_i.onchange=()=>thumbFile(s_i.files[0]);
  const fromDur=()=>{s_e.value=hm(mins(s_s.value||"00:00")+(+s_d.value||60))},fromEnd=()=>{if(!s_e.value)return;s_d.value=((mins(s_e.value)-mins(s_s.value||"00:00")+1440)%1440)||1440};
  s_ch.onchange=()=>{const c=CH.find(x=>x.n==s_ch.value);if(c){s_c.value=c.n;s_k.value=c.c}};s_s.oninput=fromDur;s_d.oninput=fromDur;s_e.oninput=fromEnd;showIP()}
-document.getElementById("svw").onclick=e=>{const b=e.target.closest("[data-id]");if(!b)return;const id=b.dataset.id,a=b.dataset.act;if(a=="del"){SCH=SCH.filter(x=>x.id!=id);sSave()}else{SEDIT=id;buildForm();window.scrollTo(0,0)}renderNext();renderViews();updNP()};
+document.getElementById("svw").onclick=e=>{const b=e.target.closest("[data-id]");if(!b)return;const id=b.dataset.id,a=b.dataset.act;if(a=="del"){SCH=SCH.filter(x=>x.id!=id);sSave()}else if(a=="dup"){dupProg(id)}else{SEDIT=id;buildForm();window.scrollTo(0,0)}renderNext();renderViews();updNP()};
 vw0.onclick=()=>{SVIEW="table";renderViews()};vw1.onclick=()=>{SVIEW="grid";renderViews()};vw2.onclick=()=>{SVIEW="agenda";renderViews()};
 ssam.onclick=()=>{const W=[1,2,3,4,5],E=[6,0],P=(i,c,t,days,st,du,n)=>({id:"c"+i,t:t,u:"",c:CH[c].n,days:days,st:st,du:du,col:CH[c].c,n:n||""});
  SCH=[P(1,0,"Premier Morning News",W,"07:00",60),P(2,0,"Premier Evening Bulletin",W,"19:00",60),P(3,0,"Premier Weekend Drama",E,"21:00",90),
@@ -689,9 +702,9 @@ if(S.fd){fi.value=S.font||"";loadFD(S.fd)}else if(S.font){fi.value=S.font;setFon
 if(S.ff){fss.value=S.ff.s;fli.checked=S.ff.l;fdl.checked=S.ff.d;fca.checked=S.ff.c;ffx.value=S.ff.x}applyFF();
 buildTZ();if(S.tz){TZ=S.tz;tzs.value=TZ}buildPray(S.pt);buildSun(S.sun,S.pd);setD(S.df||"long");if(S.cd)CD=S.cd;buildCD();setLY(S.ly||"all");if(S.hs)HS=S.hs;buildHide();tick();
 function epgStatic(){document.querySelectorAll("#pgSched [data-t],.navb [data-t]").forEach(e=>{e.textContent=T(e.dataset.t)});
- [["vw0","Table"],["vw1","Grid (EPG)"],["vw2","Agenda"],["ef24","24-hour"],["ef12","12-hour"],["ssam","Load sample"],["sclr","Clear all"],["el0","Daily rows"],["el1","TV strip"],["el2","Channels"],["sexp","Export to box"],["simp","Import from box"],["ep0","All days"]].forEach(a=>{const e=document.getElementById(a[0]);if(e)e.textContent=T(a[1])})}
+ [["vw0","Table"],["vw1","Grid (EPG)"],["vw2","Agenda"],["ef24","24-hour"],["ef12","12-hour"],["ssam","Load sample"],["sclr","Clear all"],["el0","Daily rows"],["el1","TV strip"],["el2","Channels"],["efl","Filler"],["sexp","Export to box"],["simp","Import from box"],["ep0","All days"]].forEach(a=>{const e=document.getElementById(a[0]);if(e)e.textContent=T(a[1])})}
 function epgUI(){const eq=a=>EORD.every(d=>EDAYS[d]==a.includes(d));
- el2.classList.toggle("on",EMODE=="chan");grpShow.style.display=EMODE=="chan"?"none":"";grpDay.style.display=EMODE=="chan"?"":"none";
+ el2.classList.toggle("on",EMODE=="chan");efl.classList.toggle("on",EFILL);grpShow.style.display=EMODE=="chan"?"none":"";grpDay.style.display=EMODE=="chan"?"":"none";
  ecd.innerHTML='<option value="-1">'+esc(T("Today"))+'</option>'+EORD.map(d=>'<option value="'+d+'">'+esc(eDay(d))+'</option>').join("");ecd.value=String(ECDAY);
  el0.classList.toggle("on",EMODE=="day");el1.classList.toggle("on",EMODE=="strip");ed0.classList.toggle("on",ELAB=="short");ed1.classList.toggle("on",ELAB=="long");
  ed0.textContent=eLabel([1,2,3,4,5],"short")+" \u00b7 "+eLabel([6,0],"short");ed1.textContent=eLabel([1,2,3,4,5],"long")+" \u00b7 "+eLabel([6,0],"long");
@@ -700,7 +713,7 @@ function epgUI(){const eq=a=>EORD.every(d=>EDAYS[d]==a.includes(d));
  edc.innerHTML=EORD.map(d=>'<label><input type="checkbox" data-d="'+d+'"'+(EDAYS[d]?" checked":"")+'> '+esc(eDay(d,true))+'</label>').join("")}
 function epgRefresh(){epgStatic();epgUI();buildForm();renderNext();renderViews();updNP()}
 function epgSet(f){f();eSave();epgUI();renderViews()}
-el2.onclick=()=>epgSet(()=>EMODE="chan");ecd.onchange=()=>epgSet(()=>ECDAY=+ecd.value);el0.onclick=()=>epgSet(()=>EMODE="day");el1.onclick=()=>epgSet(()=>EMODE="strip");ed0.onclick=()=>epgSet(()=>ELAB="short");ed1.onclick=()=>epgSet(()=>ELAB="long");
+efl.onclick=()=>epgSet(()=>EFILL=!EFILL);el2.onclick=()=>epgSet(()=>EMODE="chan");ecd.onchange=()=>epgSet(()=>ECDAY=+ecd.value);el0.onclick=()=>epgSet(()=>EMODE="day");el1.onclick=()=>epgSet(()=>EMODE="strip");ed0.onclick=()=>epgSet(()=>ELAB="short");ed1.onclick=()=>epgSet(()=>ELAB="long");
 ep0.onclick=()=>epgSet(()=>EDAYS=[true,true,true,true,true,true,true]);ep1.onclick=()=>epgSet(()=>EDAYS=[0,1,2,3,4,5,6].map(d=>d>=1&&d<=5));ep2.onclick=()=>epgSet(()=>EDAYS=[0,1,2,3,4,5,6].map(d=>d==6||d==0));
 edc.onchange=e=>{const t=e.target;if(t.dataset.d===undefined)return;epgSet(()=>{EDAYS[+t.dataset.d]=t.checked;if(!EDAYS.some(Boolean))EDAYS[+t.dataset.d]=true})};
 epgUI();
