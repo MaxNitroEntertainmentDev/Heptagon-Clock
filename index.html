@@ -61,6 +61,7 @@ details{background:var(--fill);border:1px solid rgba(128,128,128,.3);border-radi
 .navb{display:flex;gap:8px;justify-content:center;margin:8px}.navb a{padding:6px 16px;border-radius:999px;border:1px solid var(--ring);text-decoration:none;color:var(--fg);background:var(--fill);font-weight:700;font-size:14px}.navb a.on{background:var(--accent);color:#fff;border-color:var(--accent)}
 .sf{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center}.sf input:not([type=checkbox]){font:inherit;padding:7px 10px;border:1px solid var(--ring);border-radius:12px;background:var(--fill);color:var(--fg);box-sizing:border-box}
 .stb{width:100%;border-collapse:collapse;font-size:13px;text-align:left}.stb th,.stb td{padding:6px 8px;border-bottom:1px solid rgba(128,128,128,.3);vertical-align:top}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
+.elab,.eb,.ai,.ag>b,.stb td,.stb th{unicode-bidi:plaintext}
 .egr{min-width:max-content;font-size:11px}.erow{display:flex;border-bottom:1px solid rgba(128,128,128,.25)}.elab{width:var(--lw,56px);flex:none;position:sticky;left:0;background:var(--fill);z-index:3;font-weight:800;padding:8px 4px;text-align:left;box-sizing:border-box;font-size:12px;line-height:1.25}
 .etr{position:relative;width:1440px;flex:none;background:repeating-linear-gradient(90deg,transparent 0 59px,rgba(128,128,128,.3) 59px 60px)}.ehd{height:22px}.ehd span{position:absolute;top:3px;padding-left:3px;font-weight:700}
 .eb{position:absolute;height:54px;border-radius:8px;color:#fff;padding:2px 6px;overflow:hidden;white-space:nowrap;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.35);box-sizing:border-box;line-height:1.15;text-shadow:0 1px 2px rgba(0,0,0,.4)}.enow{position:absolute;top:0;bottom:0;width:2px;background:var(--accent);z-index:2}
@@ -73,7 +74,7 @@ text{fill:var(--fg);font-family:var(--font)}
 html,body,text,button,input,select{font-feature-settings:var(--ff,normal);font-variant-ligatures:contextual common-ligatures}
 </style></head><body>
 <div class="ipb" id="ipb"></div>
-<div class="navb"><a href="#clock">Clock</a><a href="#schedule">Schedule (EPG)</a></div>
+<div class="navb"><a href="#clock" data-t="Clock">Clock</a><a href="#schedule" data-t="Schedule (EPG)">Schedule (EPG)</a></div>
 <div id="pgClock">
 <div class="btns"><div class="grp"><span>Week starts</span><button id="b1">Monday start</button><button id="b2">Tuesday start</button><button id="b3">Wednesday start</button><button id="b4">Thursday start</button><button id="b5">Friday start</button><button id="b6">Saturday start</button><button id="b0">Sunday start</button></div><div class="grp"><span>Time format</span><button id="f12">12-hour</button><button id="f24">24-hour</button><button id="f24o">24-hour + 12-hour spoken</button></div><div class="grp"><span>Language</span><span hidden><button id="l0">English</button><button id="l1">Bahasa Melayu</button><button id="l2">English (Malay periods)</button></span><select id="l3" style="font:inherit;padding:6px 10px;border-radius:999px;border:1px solid var(--ring);background:var(--fill);color:var(--fg)"><option value="en">English</option><option value="ms">Bahasa Melayu</option><option value="em">English (Malay periods)</option><option value="lw">Lawsonvillian (fictional)</option><option value="id">Bahasa Indonesia</option><option value="jv">Basa Jawa (Javanese)</option><option value="su">Basa Sunda (Sundanese)</option><option value="es">Español</option><option value="fr">Français</option><option value="de">Deutsch</option><option value="ja">日本語</option><option value="zh">中文</option><option value="custom">Custom (my own)</option></select><span id="lst" style="font-size:12px;opacity:.7"></span></div><div class="grp"><span>Working days</span><button id="w0">Off</button><button id="w4">Brunei (gov)</button><button id="w5">Brunei (5 days private)</button><button id="w6">Brunei (6 days private)</button><button id="w1">Malaysia</button><button id="w7">Malaysia (Kedah, Kelantan, Terengganu)</button><button id="w2">Indonesia</button><button id="w3">Western</button></div><div class="grp"><span>Time zone</span><select id="tzs" style="font:inherit;padding:6px 10px;border-radius:999px;border:1px solid var(--ring);background:var(--fill);color:var(--fg);max-width:100%"></select></div><div class="grp"><span>Font features</span><select id="fss" style="font:inherit;padding:5px;border-radius:10px;border:1px solid var(--ring);background:var(--fill);color:var(--fg)"></select><label><input type="checkbox" id="fli" checked> liga</label><label><input type="checkbox" id="fdl"> dlig</label><label><input type="checkbox" id="fca" checked> calt</label><input id="ffx" placeholder="extra: ss03, cv01, -kern" style="font:inherit;padding:6px 10px;border:1px solid var(--ring);border-radius:10px;background:var(--fill);color:var(--fg);width:min(50vw,200px)"></div><div class="grp"><span>Date format</span><button id="dfl">Long date</button><button id="dfs">Short date</button></div><div class="grp"><span>Days layout</span><button id="ly0">Off (all 7 days)</button><button id="ly1">Weekdays only</button><button id="ly2">Weekends only</button><div id="cdd" style="width:100%;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center"></div></div><div class="grp"><span>Show / hide</span><div id="hsb" style="display:flex;flex-wrap:wrap;gap:6px"></div></div><div class="grp"><span>Font</span><input id="fi" placeholder="e.g. Poppins, Orbitron, Georgia" style="font:inherit;padding:6px 10px;border:1px solid var(--ring);border-radius:8px;background:var(--fill);color:var(--fg);width:min(60vw,240px)"><button id="fa">Apply</button><button id="fr">Reset</button><button id="fu">Upload font file</button><input type="file" id="ff" accept=".ttf,.otf,.woff,.woff2" hidden><button id="fc">Clear saved data</button></div></div>
 <details style="margin:6px 10px;font-size:14px"><summary style="cursor:pointer;font-weight:700">Customize heptagon clock</summary>
@@ -114,15 +115,15 @@ html,body,text,button,input,select{font-feature-settings:var(--ff,normal);font-v
 <div class="cal" id="sun"></div>
 </div>
 <div id="pgSched" hidden>
-<div class="title">YouTube Watch Schedule<small>EPG maker · Table · Grid · Agenda</small></div>
-<div class="sec">Now &amp; next</div><div class="cal" id="snx" style="width:min(94vw,820px)"></div>
-<div class="sec">Add a program</div><div class="cal" id="sfm" style="width:min(94vw,820px)"></div>
-<div class="sec">Schedule view</div><div class="btns"><div class="grp" style="justify-content:center"><button id="vw0">Table</button><button id="vw1">Grid (EPG)</button><button id="vw2">Agenda</button><button id="ef24">24-hour</button><button id="ef12">12-hour</button><button id="ssam">Load sample</button><button id="sclr">Clear all</button></div>
-<div class="grp"><span>Layout</span><button id="el0">Daily rows</button><button id="el1">TV strip</button></div>
-<div class="grp"><span>Day labels</span><button id="ed0">Mon–Fri · Sat &amp; Sun</button><button id="ed1">Monday–Friday · Saturday–Sunday</button></div>
-<div class="grp"><span>Show days</span><button id="ep0">All days</button><button id="ep1">Mon–Fri</button><button id="ep2">Sat &amp; Sun</button><div id="edc" style="width:100%;display:flex;flex-wrap:wrap;gap:6px 12px;font-size:13px"></div></div></div>
+<div class="title"><span data-t="YouTube Watch Schedule">YouTube Watch Schedule</span><small data-t="EPG maker · Table · Grid · Agenda">EPG maker · Table · Grid · Agenda</small></div>
+<div class="sec" data-t="Now &amp; next">Now &amp; next</div><div class="cal" id="snx" style="width:min(94vw,820px)"></div>
+<div class="sec" data-t="Add a program">Add a program</div><div class="cal" id="sfm" style="width:min(94vw,820px)"></div>
+<div class="sec" data-t="Schedule view">Schedule view</div><div class="btns"><div class="grp" style="justify-content:center"><button id="vw0">Table</button><button id="vw1">Grid (EPG)</button><button id="vw2">Agenda</button><button id="ef24">24-hour</button><button id="ef12">12-hour</button><button id="ssam">Load sample</button><button id="sclr">Clear all</button></div>
+<div class="grp"><span data-t="Layout">Layout</span><button id="el0">Daily rows</button><button id="el1">TV strip</button></div>
+<div class="grp"><span data-t="Day labels">Day labels</span><button id="ed0">Mon–Fri · Sat &amp; Sun</button><button id="ed1">Monday–Friday · Saturday–Sunday</button></div>
+<div class="grp"><span data-t="Show days">Show days</span><button id="ep0">All days</button><button id="ep1">Mon–Fri</button><button id="ep2">Sat &amp; Sun</button><div id="edc" style="width:100%;display:flex;flex-wrap:wrap;gap:6px 12px;font-size:13px"></div></div></div>
 <div class="cal" id="svw" style="width:min(98vw,860px);overflow-x:auto"></div>
-<div class="sec">Import / export (copy &amp; paste JSON)</div><div class="cal" style="width:min(94vw,820px)"><textarea id="sjs" rows="5" style="width:100%;font:12px monospace;box-sizing:border-box;border-radius:12px;padding:8px;border:1px solid var(--ring);background:var(--fill);color:var(--fg)"></textarea><div style="margin-top:8px"><button id="sexp">Export to box</button> <button id="simp">Import from box</button></div></div>
+<div class="sec" data-t="Import / export (copy &amp; paste JSON)">Import / export (copy &amp; paste JSON)</div><div class="cal" style="width:min(94vw,820px)"><textarea id="sjs" rows="5" style="width:100%;font:12px monospace;box-sizing:border-box;border-radius:12px;padding:8px;border:1px solid var(--ring);background:var(--fill);color:var(--fg)"></textarea><div style="margin-top:8px"><button id="sexp">Export to box</button> <button id="simp">Import from box</button></div></div>
 </div>
 <script>
 const NS="http://www.w3.org/2000/svg",s=document.getElementById("s");
@@ -220,19 +221,74 @@ Daylight|Siang hari|Luz diurna|Durée du jour|Tageslicht|日照時間|日照时�
 Weekday|Hari kerja|Día laborable|Jour de semaine|Wochentag|平日|工作日
 Weekend|Akhir pekan|Fin de semana|Week-end|Wochenende|週末|周末`.split("\n").map(r=>r.split("|"));
 const UC=["id","es","fr","de","ja","zh"],EN_D=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],EN_M=["January","February","March","April","May","June","July","August","September","October","November","December"];
+const EPGR=`YouTube Watch Schedule|Jadwal Tontonan YouTube|Programación de YouTube|Programme YouTube|YouTube-Programm|YouTube視聴スケジュール|YouTube 观看日程|Jadual Tontonan YouTube
+EPG maker · Table · Grid · Agenda|Pembuat EPG · Tabel · Grid · Agenda|Creador de EPG · Tabla · Cuadrícula · Agenda|Créateur d'EPG · Tableau · Grille · Agenda|EPG-Ersteller · Tabelle · Raster · Agenda|EPGメーカー · 表 · グリッド · アジェンダ|EPG 制作 · 表格 · 网格 · 日程|Pembuat EPG · Jadual · Grid · Agenda
+Clock|Jam|Reloj|Horloge|Uhr|時計|时钟|Jam
+Schedule (EPG)|Jadwal (EPG)|Horario (EPG)|Programme (EPG)|Programm (EPG)|スケジュール(EPG)|日程(EPG)|Jadual (EPG)
+Now & next|Sekarang & berikutnya|Ahora y siguiente|Maintenant et ensuite|Jetzt & als Nächstes|今と次|当前与接下来|Sekarang & seterusnya
+Add a program|Tambah program|Añadir un programa|Ajouter un programme|Programm hinzufügen|番組を追加|添加节目|Tambah program
+Schedule view|Tampilan jadwal|Vista del horario|Vue du programme|Ansicht des Programms|スケジュール表示|日程视图|Paparan jadual
+Import / export (copy & paste JSON)|Impor / ekspor (salin & tempel JSON)|Importar / exportar (copiar y pegar JSON)|Importer / exporter (copier-coller JSON)|Import / Export (JSON kopieren & einfügen)|インポート / エクスポート(JSONをコピー＆ペースト)|导入 / 导出(复制粘贴 JSON)|Import / eksport (salin & tampal JSON)
+Table|Tabel|Tabla|Tableau|Tabelle|表|表格|Jadual
+Grid (EPG)|Grid (EPG)|Cuadrícula (EPG)|Grille (EPG)|Raster (EPG)|グリッド(EPG)|网格(EPG)|Grid (EPG)
+Agenda|Agenda|Agenda|Agenda|Agenda|アジェンダ|日程|Agenda
+24-hour|24 jam|24 horas|24 heures|24 Std.|24時間|24小时|24 jam
+12-hour|12 jam|12 horas|12 heures|12 Std.|12時間|12小时|12 jam
+Load sample|Muat contoh|Cargar ejemplo|Charger un exemple|Beispiel laden|サンプルを読み込む|加载示例|Muat contoh
+Clear all|Hapus semua|Borrar todo|Tout effacer|Alles löschen|すべて消去|全部清除|Padam semua
+Layout|Tata letak|Diseño|Disposition|Layout|レイアウト|布局|Susun atur
+Daily rows|Baris per hari|Filas por día|Lignes par jour|Zeile pro Tag|日別の行|按天显示|Baris harian
+TV strip|Jalur TV|Franja de TV|Bandeau TV|TV-Leiste|テレビ形式|电视条|Jalur TV
+Day labels|Label hari|Etiquetas de días|Libellés des jours|Tagesbezeichnungen|曜日ラベル|日期标签|Label hari
+Show days|Tampilkan hari|Mostrar días|Afficher les jours|Tage anzeigen|表示する曜日|显示的日期|Papar hari
+All days|Semua hari|Todos los días|Tous les jours|Alle Tage|全日|所有日期|Semua hari
+Daily|Setiap hari|Diario|Tous les jours|Täglich|毎日|每天|Setiap hari
+Every day|Setiap hari|Todos los días|Tous les jours|Jeden Tag|毎日|每天|Setiap hari
+Program title|Judul program|Título del programa|Titre du programme|Titel des Programms|番組タイトル|节目标题|Tajuk program
+YouTube link or video ID|Tautan YouTube atau ID video|Enlace de YouTube o ID del vídeo|Lien YouTube ou ID de la vidéo|YouTube-Link oder Video-ID|YouTubeのリンクまたは動画ID|YouTube 链接或视频 ID|Pautan YouTube atau ID video
+Channel / label|Saluran / label|Canal / etiqueta|Chaîne / libellé|Kanal / Label|チャンネル / ラベル|频道 / 标签|Saluran / label
+Notes|Catatan|Notas|Notes|Notizen|メモ|备注|Nota
+Start|Mulai|Inicio|Début|Start|開始|开始|Mula
+End|Selesai|Fin|Fin|Ende|終了|结束|Tamat
+Minutes|Menit|Minutos|Minutes|Minuten|分|分钟|Minit
+Colour|Warna|Color|Couleur|Farbe|色|颜色|Warna
+Thumbnail|Gambar mini|Miniatura|Miniature|Vorschaubild|サムネイル|缩略图|Gambar kecil
+Add to schedule|Tambah ke jadwal|Añadir al horario|Ajouter au programme|Zum Programm hinzufügen|スケジュールに追加|添加到日程|Tambah ke jadual
+Update program|Perbarui program|Actualizar programa|Mettre à jour le programme|Programm aktualisieren|番組を更新|更新节目|Kemas kini program
+Cancel|Batal|Cancelar|Annuler|Abbrechen|キャンセル|取消|Batal
+Enter a title and tick at least one day.|Masukkan judul dan centang minimal satu hari.|Escribe un título y marca al menos un día.|Saisissez un titre et cochez au moins un jour.|Titel eingeben und mindestens einen Tag ankreuzen.|タイトルを入力し、少なくとも1日を選択してください。|请输入标题并至少勾选一天。|Masukkan tajuk dan tandakan sekurang-kurangnya satu hari.
+No programs yet. Add one below or load the sample.|Belum ada program. Tambahkan di bawah atau muat contoh.|Aún no hay programas. Añade uno abajo o carga el ejemplo.|Aucun programme pour l'instant. Ajoutez-en un ci-dessous ou chargez l'exemple.|Noch keine Programme. Unten hinzufügen oder Beispiel laden.|番組はまだありません。下で追加するか、サンプルを読み込んでください。|还没有节目。请在下方添加或加载示例。|Belum ada program. Tambah di bawah atau muat contoh.
+No programs yet.|Belum ada program.|Aún no hay programas.|Aucun programme pour l'instant.|Noch keine Programme.|番組はまだありません。|还没有节目。|Belum ada program.
+Nothing scheduled right now.|Tidak ada jadwal saat ini.|No hay nada programado ahora.|Rien de programmé pour le moment.|Gerade nichts geplant.|現在予定はありません。|当前没有安排。|Tiada jadual sekarang.
+No program now|Tidak ada program saat ini|Ningún programa ahora|Aucun programme en ce moment|Kein Programm jetzt|現在番組なし|当前没有节目|Tiada program sekarang
+Now:|Sekarang:|Ahora:|Maintenant :|Jetzt:|現在:|现在：|Sekarang:
+Next:|Berikutnya:|Siguiente:|Suivant :|Nächste:|次:|下一个：|Seterusnya:
+until|hingga|hasta|jusqu'à|bis|～|直到|sehingga
+in|dalam|en|dans|in|あと|还有|dalam
+NOW|SEKARANG|AHORA|MAINTENANT|JETZT|今|现在|SEKARANG
+today|hari ini|hoy|aujourd'hui|heute|今日|今天|hari ini
+Title|Judul|Título|Titre|Titel|タイトル|标题|Tajuk
+Channel|Saluran|Canal|Chaîne|Kanal|チャンネル|频道|Saluran
+Days|Hari|Días|Jours|Tage|曜日|日期|Hari
+Min|Mnt|Min|Min|Min|分|分钟|Min
+Edit|Ubah|Editar|Modifier|Bearbeiten|編集|编辑|Sunting
+Delete|Hapus|Eliminar|Supprimer|Löschen|削除|删除|Padam
+Export to box|Ekspor ke kotak|Exportar al cuadro|Exporter vers la zone|In Feld exportieren|ボックスへ出力|导出到文本框|Eksport ke kotak
+Import from box|Impor dari kotak|Importar desde el cuadro|Importer depuis la zone|Aus Feld importieren|ボックスから読み込む|从文本框导入|Import dari kotak`.split("\n").map(r=>r.split("|")),EPG_MS={};EPGR.forEach(r=>{EPG_MS[r[0]]=r[7]});
+let EPGD=null;const T=s=>(EPGD&&EPGD[s])||s;
 let TD=null,TR=null;
 function mkTR(){if(!TD){TR=null;return}const ks=Object.keys(TD).sort((a,b)=>b.length-a.length).map(k=>k.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"));TR=new RegExp("(^|[^A-Za-z])("+ks.join("|")+")(?![A-Za-z])","g")}
 const SKIP=/^(SCRIPT|STYLE|TEXTAREA|OPTION)$/;
 function doNode(n){if(n.__t!==undefined&&n.nodeValue===n.__t)return;n.__o=n.nodeValue;const r=TR?n.__o.replace(TR,(m,a,k)=>a+(TD[k]||k)):n.__o;if(r!==n.nodeValue){n.__t=r;n.nodeValue=r}else n.__t=undefined}
 function walk(root,reset){const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;while(n=w.nextNode()){if(!n.parentNode||SKIP.test(n.parentNode.nodeName))continue;if(reset&&n.__t!==undefined&&n.nodeValue===n.__t){n.nodeValue=n.__o;n.__t=undefined}doNode(n)}}
 new MutationObserver(ms=>{if(!TR)return;ms.forEach(m=>{if(m.type=="characterData"){if(!SKIP.test(m.target.parentNode?m.target.parentNode.nodeName:""))doNode(m.target)}else m.addedNodes.forEach(a=>{if(a.nodeType==3){if(a.parentNode&&!SKIP.test(a.parentNode.nodeName))doNode(a)}else if(a.nodeType==1)walk(a)})})}).observe(document.body,{childList:true,subtree:true,characterData:true});
-async function setUI(){const st=document.getElementById("lst"),pk=lang=="lw"?PK:null;TD=null;st.textContent="";
+async function setUI(){const st=document.getElementById("lst"),pk=lang=="lw"?PK:null;TD=null;EPGD=lang=="ms"?EPG_MS:null;st.textContent="";
  const addDM=P=>{if(!P)return;EN_D.forEach((d,j)=>TD[d]=P.d[j]);EN_M.forEach((d,j)=>TD[d]=P.m[j])};
- if(pk&&(UC.includes(pk)||pk=="jv"||pk=="su")){const c=UC.includes(pk)?pk:"id",i=UC.indexOf(c)+1;TD={};UI.forEach(r=>{TD[r[0]]=r[i]});addDM(PACKS[pk])}
+ if(pk&&(UC.includes(pk)||pk=="jv"||pk=="su")){const c=UC.includes(pk)?pk:"id",i=UC.indexOf(c)+1;TD={};UI.forEach(r=>{TD[r[0]]=r[i]});addDM(PACKS[pk]);EPGD={};EPGR.forEach(r=>{EPGD[r[0]]=r[i]})}
  else if(pk&&pk.indexOf("x:")==0){st.textContent="Translating labels (experimental)\u2026";
-  try{if(!("Translator" in self))throw 0;const t=await Translator.create({sourceLanguage:"en",targetLanguage:pk.slice(2)}),d={};for(const r of UI)d[r[0]]=await t.translate(r[0]);
-   if(pk!=PK||lang!="lw")return;TD=d;addDM(PACKS[pk]);st.textContent=""}catch(e){TD=null;st.textContent="Labels stay in English (browser translator unavailable)"}}
- mkTR();walk(document.body,true)}
+  try{if(!("Translator" in self))throw 0;const t=await Translator.create({sourceLanguage:"en",targetLanguage:pk.slice(2)}),d={};for(const r of UI)d[r[0]]=await t.translate(r[0]);const e={};for(const r of EPGR)e[r[0]]=await t.translate(r[0]);
+   if(pk!=PK||lang!="lw")return;TD=d;EPGD=e;addDM(PACKS[pk]);st.textContent=""}catch(e){TD=null;st.textContent="Labels stay in English (browser translator unavailable)"}}
+ mkTR();walk(document.body,true);if(window.epgReady)epgRefresh()}
 let SCH=[],SVIEW="grid",SEDIT=null,SK=0;try{SCH=JSON.parse(localStorage.getItem("hcs")||"[]")}catch(e){}
 const sSave=()=>{try{localStorage.setItem("hcs",JSON.stringify(SCH))}catch(e){}};
 const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -240,38 +296,48 @@ const ytUrl=u=>{u=(u||"").trim();return !u?"":/^https?:\/\//i.test(u)?u:"https:/
 const mins=s=>{const a=(s||"0:0").split(":");return (+a[0])*60+(+a[1]||0)};
 const hm=m=>{m=((Math.round(m)%1440)+1440)%1440;return String(Math.floor(m/60)).padStart(2,"0")+":"+String(m%60).padStart(2,"0")};
 let EF=24;try{EF=+localStorage.getItem("hef")==12?12:24}catch(e){}
-const hd=m=>{m=((Math.round(m)%1440)+1440)%1440;if(EF==24)return hm(m);const h=Math.floor(m/60);return ((h+11)%12+1)+":"+String(m%60).padStart(2,"0")+" "+(h<12?"AM":"PM")};
+const EAB={"TENGAH MALAM":"T/MLM","PAGI":"PG","TENGAH HARI":"T/HARI","PETANG":"PTG","MALAM":"MLM"};
+const hd=m=>{m=((Math.round(m)%1440)+1440)%1440;if(EF==24)return hm(m);const h=Math.floor(m/60),n=String(m%60).padStart(2,"0"),H=(h+11)%12+1;
+ if(lang=="en")return H+":"+n+" "+(h<12?"AM":"PM");const pr=perOf(h)[3];if(lang=="em"||lang=="ms")return H+":"+n+" "+(EAB[pr]||pr);return H+":"+n+" "+pr};
+function eLoc(){if(lang=="en"||lang=="em")return "en";if(lang=="ms")return "ms";if(lang=="lw"){if(PK.indexOf("x:")==0)return PK.slice(2);return ["id","jv","su","es","fr","de","ja","zh"].includes(PK)?PK:null}return null}
+const MALAY_D=["Ahad","Isnin","Selasa","Rabu","Khamis","Jumaat","Sabtu"];
+function eDay(d,sh){if(lang=="ms")return sh?(d==0?"Ahd":MALAY_D[d].slice(0,3)):MALAY_D[d];
+ if(lang=="lw"){const f=LD[d];if(!sh)return f;const L=eLoc();if(L){try{return new Intl.DateTimeFormat(L,{weekday:"short"}).format(new Date(2023,0,1+d))}catch(e){}}return f.slice(0,3)}
+ return sh?EN_D[d].slice(0,3):EN_D[d]}
+function ePair(a,b){const L=eLoc();if(L&&L!="ms"){try{return new Intl.ListFormat(L,{type:"conjunction",style:"short"}).format([a,b])}catch(e){}}return a+" & "+b}
+function durL(m){const L=eLoc();if(!L)return dur(m);m=Math.round(m);const d=Math.floor(m/1440),h=Math.floor(m%1440/60),o=[];
+ try{const f=(v,u)=>new Intl.NumberFormat(L,{style:"unit",unit:u,unitDisplay:"narrow"}).format(v);if(d)o.push(f(d,"day"));if(h)o.push(f(h,"hour"));o.push(f(m%60,"minute"));return o.join(" ")}catch(e){return dur(m)}}
 const dur=m=>{m=Math.round(m);const d=Math.floor(m/1440),h=Math.floor(m%1440/60);return (d?d+"d ":"")+(h?h+"h ":"")+(m%60)+"m"};
 function segs(){const o=[];SCH.forEach(p=>{const s=mins(p.st),e=s+p.du;p.days.forEach(d=>{o.push({p:p,d:d,s:s,e:Math.min(e,1440)});if(e>1440)o.push({p:p,d:(d+1)%7,s:0,e:e-1440,cont:true})})});return o}
 function schNow(){const n=getNow(),dow=n.getDay(),m=n.getHours()*60+n.getMinutes()+n.getSeconds()/60,sg=segs(),now=sg.find(x=>x.d==dow&&x.s<=m&&m<x.e);let nx=null,best=1e9;
  sg.forEach(x=>{let dd=((x.d-dow+7)%7)*1440+x.s-m;if(dd<=0)dd+=7*1440;if(dd<best&&!(now&&x.p===now.p&&x.d==now.d&&x.s==now.s)){best=dd;nx=x}});return {now:now,nx:nx,best:best,dow:dow,m:m}}
-function renderNext(){const el=document.getElementById("snx");if(!SCH.length){el.innerHTML='No programs yet. Add one below, or press <b>Load sample</b>.';return}const r=schNow();
- el.innerHTML='<div style="text-align:left;font-size:15px">'+(r.now?'<div>\u25b6 <b>Now:</b> '+thumb(r.now.p,"th tl")+'<span class="dot" style="background:'+esc(r.now.p.col)+'"></span>'+esc(r.now.p.t)+' <small>('+esc(r.now.p.c)+') until '+hd(r.now.e)+'</small></div>':'<div style="opacity:.7">Nothing scheduled right now.</div>')+(r.nx?'<div style="margin-top:6px">\u23ed <b>Next:</b> '+thumb(r.nx.p,"th tl")+'<span class="dot" style="background:'+esc(r.nx.p.col)+'"></span>'+esc(r.nx.p.t)+' <small>'+EN_D[r.nx.d]+' '+hd(r.nx.s)+'\u2013'+hd(r.nx.e)+' \u00b7 in '+dur(r.best)+'</small></div>':'')+'</div>'}
+function renderNext(){const el=document.getElementById("snx");if(!SCH.length){el.textContent=T("No programs yet. Add one below or load the sample.");return}const r=schNow();
+ el.innerHTML='<div style="text-align:left;font-size:15px">'+(r.now?'<div>\u25b6 <b>'+esc(T("Now:"))+'</b> '+thumb(r.now.p,"th tl")+'<span class="dot" style="background:'+esc(r.now.p.col)+'"></span>'+esc(r.now.p.t)+' <small>('+esc(r.now.p.c)+') '+esc(T("until"))+' '+hd(r.now.e)+'</small></div>':'<div style="opacity:.7">'+esc(T("Nothing scheduled right now."))+'</div>')+(r.nx?'<div style="margin-top:6px">\u23ed <b>'+esc(T("Next:"))+'</b> '+thumb(r.nx.p,"th tl")+'<span class="dot" style="background:'+esc(r.nx.p.col)+'"></span>'+esc(r.nx.p.t)+' <small>'+esc(eDay(r.nx.d))+' '+hd(r.nx.s)+'\u2013'+hd(r.nx.e)+' \u00b7 '+esc(T("in"))+' '+esc(durL(r.best))+'</small></div>':'')+'</div>'}
 function updNP(){const el=document.getElementById("np");if(!SCH.length){el.style.display="none";return}const r=schNow();el.style.display="";
- el.textContent=(r.now?"\u25b6 Now: "+r.now.p.t+" (until "+hd(r.now.e)+")":"No program now")+(r.nx?" \u00b7 Next: "+r.nx.p.t+" "+NE[r.nx.d]+" "+hd(r.nx.s)+" (in "+dur(r.best)+")":"")}
+ el.textContent=(r.now?"\u25b6 "+T("Now:")+" "+r.now.p.t+" ("+T("until")+" "+hd(r.now.e)+")":T("No program now"))+(r.nx?" \u00b7 "+T("Next:")+" "+r.nx.p.t+" "+eDay(r.nx.d,true)+" "+hd(r.nx.s)+" ("+T("in")+" "+durL(r.best)+")":"")}
 let EMODE="strip",ELAB="short",EDAYS=[true,true,true,true,true,true,true];const EORD=[1,2,3,4,5,6,0];
 try{const o=JSON.parse(localStorage.getItem("hes")||"{}");if(o.m)EMODE=o.m;if(o.l)ELAB=o.l;if(Array.isArray(o.d)&&o.d.length==7&&o.d.some(Boolean))EDAYS=o.d.map(Boolean)}catch(e){}
 const eSave=()=>{try{localStorage.setItem("hes",JSON.stringify({m:EMODE,l:ELAB,d:EDAYS}))}catch(e){}};
-function eLabel(ds){const ix=EORD.map((d,i)=>ds.includes(d)?i:-1).filter(i=>i>=0),L=ELAB=="long",nm=d=>L?EN_D[d]:EN_D[d].slice(0,3);if(!ix.length)return "";if(ix.length==7)return L?"Every day":"Daily";
+function eLabel(ds,sty){sty=sty||ELAB;const ix=EORD.map((d,i)=>ds.includes(d)?i:-1).filter(i=>i>=0),L=sty=="long",nm=d=>eDay(d,!L);if(!ix.length)return "";if(ix.length==7)return T(L?"Every day":"Daily");
  const runs=[];ix.forEach(i=>{const r=runs[runs.length-1];if(r&&r[1]==i-1)r[1]=i;else runs.push([i,i])});
- return runs.map(r=>{const a=EORD[r[0]],b=EORD[r[1]];return r[0]==r[1]?nm(a):(r[1]==r[0]+1&&!L)?nm(a)+" & "+nm(b):nm(a)+"\u2013"+nm(b)}).join(", ")}
+ return runs.map(r=>{const a=EORD[r[0]],b=EORD[r[1]];return r[0]==r[1]?nm(a):(r[1]==r[0]+1&&!L)?ePair(nm(a),nm(b)):nm(a)+"\u2013"+nm(b)}).join(", ")}
 function eGroups(sg){const days=EORD.filter(d=>EDAYS[d]),one=d=>sg.filter(x=>x.d==d).sort((a,b)=>a.s-b.s);
  if(EMODE!="strip")return days.map(d=>({days:[d],rows:one(d)}));
  const map=new Map();days.forEach(d=>{const rows=one(d),sig=rows.map(x=>x.p.id+"@"+x.s+"-"+x.e+(x.cont?"c":"")).join("|"),g=map.get(sig);if(g)g.days.push(d);else map.set(sig,{days:[d],rows:rows})});
  let a=[...map.values()];const ne=a.filter(g=>g.rows.length);return ne.length?ne:a}
-function tableHTML(){const list=SCH.filter(p=>p.days.some(d=>EDAYS[d]));if(!list.length)return '<div style="opacity:.7">No programs yet.</div>';let h='<table class="stb"><tr><th>Title</th><th>Channel</th><th>Days</th><th>Start</th><th>End</th><th>Min</th><th>Notes</th><th></th></tr>';
+function tableHTML(){const list=SCH.filter(p=>p.days.some(d=>EDAYS[d]));if(!list.length)return '<div style="opacity:.7">'+esc(T("No programs yet."))+'</div>';let h='<table class="stb"><tr><th>'+esc(T("Title"))+'</th><th>'+esc(T("Channel"))+'</th><th>'+esc(T("Days"))+'</th><th>'+esc(T("Start"))+'</th><th>'+esc(T("End"))+'</th><th>'+esc(T("Min"))+'</th><th>'+esc(T("Notes"))+'</th><th></th></tr>';
  list.sort((a,b)=>mins(a.st)-mins(b.st)).forEach(p=>{const u=ytUrl(p.u),ds=eLabel(p.days.filter(d=>EDAYS[d]));
-  h+='<tr><td>'+thumb(p,"th ts")+'<span class="dot" style="background:'+esc(p.col)+'"></span>'+(u?'<a href="'+esc(u)+'" target="_blank" rel="noopener">'+esc(p.t)+'</a>':esc(p.t))+'</td><td>'+esc(p.c)+'</td><td>'+ds+'</td><td>'+hd(mins(p.st))+'</td><td>'+hd(mins(p.st)+p.du)+'</td><td>'+p.du+'</td><td>'+esc(p.n)+'</td><td><button data-act="edit" data-id="'+p.id+'">Edit</button> <button data-act="del" data-id="'+p.id+'">Delete</button></td></tr>'});return h+'</table>'}
+  h+='<tr><td>'+thumb(p,"th ts")+'<span class="dot" style="background:'+esc(p.col)+'"></span>'+(u?'<a href="'+esc(u)+'" target="_blank" rel="noopener">'+esc(p.t)+'</a>':esc(p.t))+'</td><td>'+esc(p.c)+'</td><td>'+ds+'</td><td>'+hd(mins(p.st))+'</td><td>'+hd(mins(p.st)+p.du)+'</td><td>'+p.du+'</td><td>'+esc(p.n)+'</td><td><button data-act="edit" data-id="'+p.id+'">'+esc(T("Edit"))+'</button> <button data-act="del" data-id="'+p.id+'">'+esc(T("Delete"))+'</button></td></tr>'});return h+'</table>'}
 function gridHTML(){const sg=segs(),n=getNow(),dow=n.getDay(),nm=n.getHours()*60+n.getMinutes(),gs=eGroups(sg),lw=Math.min(200,Math.max(56,Math.max(0,...gs.map(g=>eLabel(g.days).length))*7.5+16));
  let h='<div class="egr" style="--lw:'+lw+'px"><div class="erow"><div class="elab"></div><div class="etr ehd">';
- for(let i=0;i<24;i++)h+='<span style="left:'+i*60+'px">'+(EF==24?String(i).padStart(2,"0"):((i+11)%12+1)+(i<12?"a":"p"))+'</span>';h+='</div></div>';
+ for(let i=0;i<24;i++)h+='<span style="left:'+i*60+'px">'+(EF==24?String(i).padStart(2,"0"):((i+11)%12+1)+(lang=="en"?(i<12?"a":"p"):""))+'</span>';h+='</div></div>';
  gs.forEach(g=>{const lanes=[];let bl="";
   g.rows.forEach(x=>{let l=lanes.findIndex(e=>e<=x.s);if(l<0){l=lanes.length;lanes.push(0)}lanes[l]=x.e;
    bl+='<div class="eb" data-id="'+x.p.id+'" style="left:'+x.s+'px;width:'+Math.max(24,x.e-x.s)+'px;top:'+(l*58+3)+'px;background:'+esc(x.p.col)+'" title="'+esc(x.p.t)+' '+hd(x.s)+'-'+hd(x.e)+'">'+((x.e-x.s)>=120?thumb(x.p,"th tg"):"")+(x.cont?"\u21aa ":"")+esc(x.p.t)+'<br><small>'+hd(x.s)+'\u2013'+hd(x.e)+'</small></div>'});
   h+='<div class="erow"><div class="elab">'+eLabel(g.days)+'</div><div class="etr" style="height:'+(Math.max(1,lanes.length)*58+6)+'px">'+bl+(g.days.includes(dow)?'<div class="enow" style="left:'+nm+'px"></div>':'')+'</div></div>'});return h+'</div>'}
 function agendaHTML(){const sg=segs(),nw=schNow();let h="";
- eGroups(sg).forEach(g=>{h+='<div class="ag"><b>'+eLabel(g.days)+(g.days.includes(nw.dow)?' \u00b7 today':'')+'</b>';if(!g.rows.length)h+='<div class="ai" style="opacity:.5">\u2014</div>';
-  g.rows.forEach(x=>{const on=g.days.includes(nw.dow)&&nw.now&&nw.now.p===x.p&&nw.now.s==x.s&&nw.now.e==x.e;h+='<div class="ai'+(on?' now':'')+'" style="border-left:6px solid '+esc(x.p.col)+'" data-id="'+x.p.id+'">'+thumb(x.p,"th ta")+'<b>'+hd(x.s)+'\u2013'+hd(x.e)+'</b> '+esc(x.p.t)+' <small>'+esc(x.p.c)+'</small>'+(on?' <span class="live">\u25b6 NOW</span>':'')+'</div>'});h+='</div>'});return h}
+ eGroups(sg).forEach(g=>{h+='<div class="ag"><b>'+eLabel(g.days)+(g.days.includes(nw.dow)?' \u00b7 '+esc(T("today")):'')+'</b>';if(!g.rows.length)h+='<div class="ai" style="opacity:.5">\u2014</div>';
+  g.rows.forEach(x=>{const on=g.days.includes(nw.dow)&&nw.now&&nw.now.p===x.p&&nw.now.s==x.s&&nw.now.e==x.e;h+='<div class="ai'+(on?' now':'')+'" style="border-left:6px solid '+esc(x.p.col)+'" data-id="'+x.p.id+'">'+thumb(x.p,"th ta")+'<b>'+hd(x.s)+'\u2013'+hd(x.e)+'</b> '+esc(x.p.t)+' <small>'+esc(x.p.c)+'</small>'+(on?' <span class="live">\u25b6 '+esc(T("NOW"))+'</span>':'')+'</div>'});h+='</div>'});return h}
 function renderViews(){document.getElementById("svw").innerHTML=SVIEW=="table"?tableHTML():SVIEW=="grid"?gridHTML():agendaHTML();["table","grid","agenda"].forEach((v,i)=>document.getElementById("vw"+i).classList.toggle("on",SVIEW==v))}
 function ytId(u){u=(u||"").trim();const m=u.match(/(?:[?&]v=|youtu\.be\/|shorts\/|embed\/|live\/|\/v\/)([A-Za-z0-9_-]{11})/);if(m)return m[1];return /^[A-Za-z0-9_-]{11}$/.test(u)?u:""}
 function thumb(p,c){const id=ytId(p.u),s=p.img||(id?"https://i.ytimg.com/vi/"+id+"/mqdefault.jpg":"");
@@ -283,11 +349,11 @@ let SIMG="";
 function showIP(){const e=document.getElementById("s_ip");e.innerHTML=SIMG?'<img class="th ts" src="'+SIMG+'" alt=""> <button id="s_ir">Remove</button>':'';if(SIMG)document.getElementById("s_ir").onclick=()=>{SIMG="";showIP()}}
 function thumbFile(f){if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const c=document.createElement("canvas");c.width=320;c.height=180;const x=c.getContext("2d"),s=Math.max(320/im.width,180/im.height),w=im.width*s,h=im.height*s;x.drawImage(im,(320-w)/2,(180-h)/2,w,h);SIMG=c.toDataURL("image/jpeg",.72);showIP()};im.src=r.result};r.readAsDataURL(f)}
 function buildForm(){const p=SCH.find(x=>x.id==SEDIT)||{t:"",u:"",c:"",days:[1,2,3,4,5],st:"19:00",du:60,col:"#2f8fff",n:""};
- SIMG=p.img||"";document.getElementById("sfm").innerHTML='<div class="sf"><input id="s_t" placeholder="Program title" value="'+esc(p.t)+'"><input id="s_u" placeholder="YouTube link or video ID" value="'+esc(p.u)+'"><input id="s_c" placeholder="Channel / label" value="'+esc(p.c)+'"></div>'+
-  '<div class="sf" style="margin-top:8px">'+[1,2,3,4,5,6,0].map(d=>'<label><input type="checkbox" class="sd" value="'+d+'"'+(p.days.includes(d)?' checked':'')+'> '+NE[d]+'</label>').join('')+'</div>'+
-  '<div class="sf" style="margin-top:8px"><label>Start <input id="s_s" type="time" value="'+esc(p.st)+'"></label><label>End <input id="s_e" type="time" value="'+hm(mins(p.st)+p.du)+'"></label><label>Minutes <input id="s_d" type="number" min="5" max="1440" step="5" style="width:80px" value="'+p.du+'"></label><label>Colour <input id="s_k" type="color" value="'+esc(p.col)+'"></label><label>Thumbnail <input id="s_i" type="file" accept="image/*" style="max-width:190px"></label><span id="s_ip"></span><input id="s_n" placeholder="Notes" value="'+esc(p.n)+'"></div>'+
-  '<div style="margin-top:10px"><button id="s_add">'+(SEDIT?'Update program':'Add to schedule')+'</button>'+(SEDIT?' <button id="s_cx">Cancel</button>':'')+'</div><div id="s_err" style="color:var(--accent);font-size:12px;margin-top:4px"></div>';
- document.getElementById("s_add").onclick=()=>{const t=s_t.value.trim(),ds=[...document.querySelectorAll(".sd:checked")].map(x=>+x.value);if(!t||!ds.length){s_err.textContent="Enter a title and tick at least one day.";return}
+ SIMG=p.img||"";document.getElementById("sfm").innerHTML='<div class="sf"><input id="s_t" placeholder="'+esc(T("Program title"))+'" value="'+esc(p.t)+'"><input id="s_u" placeholder="'+esc(T("YouTube link or video ID"))+'" value="'+esc(p.u)+'"><input id="s_c" placeholder="'+esc(T("Channel / label"))+'" value="'+esc(p.c)+'"></div>'+
+  '<div class="sf" style="margin-top:8px">'+[1,2,3,4,5,6,0].map(d=>'<label><input type="checkbox" class="sd" value="'+d+'"'+(p.days.includes(d)?' checked':'')+'> '+eDay(d,true)+'</label>').join('')+'</div>'+
+  '<div class="sf" style="margin-top:8px"><label>'+esc(T("Start"))+' <input id="s_s" type="time" value="'+esc(p.st)+'"></label><label>'+esc(T("End"))+' <input id="s_e" type="time" value="'+hm(mins(p.st)+p.du)+'"></label><label>'+esc(T("Minutes"))+' <input id="s_d" type="number" min="5" max="1440" step="5" style="width:80px" value="'+p.du+'"></label><label>'+esc(T("Colour"))+' <input id="s_k" type="color" value="'+esc(p.col)+'"></label><label>'+esc(T("Thumbnail"))+' <input id="s_i" type="file" accept="image/*" style="max-width:190px"></label><span id="s_ip"></span><input id="s_n" placeholder="'+esc(T("Notes"))+'" value="'+esc(p.n)+'"></div>'+
+  '<div style="margin-top:10px"><button id="s_add">'+esc(T(SEDIT?"Update program":"Add to schedule"))+'</button>'+(SEDIT?' <button id="s_cx">'+esc(T("Cancel"))+'</button>':'')+'</div><div id="s_err" style="color:var(--accent);font-size:12px;margin-top:4px"></div>';
+ document.getElementById("s_add").onclick=()=>{const t=s_t.value.trim(),ds=[...document.querySelectorAll(".sd:checked")].map(x=>+x.value);if(!t||!ds.length){s_err.textContent=T("Enter a title and tick at least one day.");return}
   const o={id:SEDIT||String(Date.now())+Math.random().toString(36).slice(2,5),t:t,u:s_u.value.trim(),c:s_c.value.trim(),days:ds,st:s_s.value||"00:00",du:Math.max(5,Math.min(1440,+s_d.value||60)),col:s_k.value,n:s_n.value.trim(),img:SIMG};
   const i=SCH.findIndex(x=>x.id==o.id);if(i>=0)SCH[i]=o;else SCH.push(o);SEDIT=null;sSave();buildForm();renderNext();renderViews();updNP()};
  if(SEDIT)document.getElementById("s_cx").onclick=()=>{SEDIT=null;buildForm()};s_i.onchange=()=>thumbFile(s_i.files[0]);
@@ -612,10 +678,15 @@ setW(S.wd!==undefined?S.wd:"my");if(S.cj)PACKS.custom=S.cj;if(S.lang=="lw"){appl
 if(S.fd){fi.value=S.font||"";loadFD(S.fd)}else if(S.font){fi.value=S.font;setFont(S.font)}
 if(S.ff){fss.value=S.ff.s;fli.checked=S.ff.l;fdl.checked=S.ff.d;fca.checked=S.ff.c;ffx.value=S.ff.x}applyFF();
 buildTZ();if(S.tz){TZ=S.tz;tzs.value=TZ}buildPray(S.pt);buildSun(S.sun,S.pd);setD(S.df||"long");if(S.cd)CD=S.cd;buildCD();setLY(S.ly||"all");if(S.hs)HS=S.hs;buildHide();tick();
+function epgStatic(){document.querySelectorAll("#pgSched [data-t],.navb [data-t]").forEach(e=>{e.textContent=T(e.dataset.t)});
+ [["vw0","Table"],["vw1","Grid (EPG)"],["vw2","Agenda"],["ef24","24-hour"],["ef12","12-hour"],["ssam","Load sample"],["sclr","Clear all"],["el0","Daily rows"],["el1","TV strip"],["sexp","Export to box"],["simp","Import from box"],["ep0","All days"]].forEach(a=>{const e=document.getElementById(a[0]);if(e)e.textContent=T(a[1])})}
 function epgUI(){const eq=a=>EORD.every(d=>EDAYS[d]==a.includes(d));
  el0.classList.toggle("on",EMODE=="day");el1.classList.toggle("on",EMODE=="strip");ed0.classList.toggle("on",ELAB=="short");ed1.classList.toggle("on",ELAB=="long");
+ ed0.textContent=eLabel([1,2,3,4,5],"short")+" \u00b7 "+eLabel([6,0],"short");ed1.textContent=eLabel([1,2,3,4,5],"long")+" \u00b7 "+eLabel([6,0],"long");
+ ep1.textContent=eLabel([1,2,3,4,5]);ep2.textContent=eLabel([6,0]);
  ep0.classList.toggle("on",eq(EORD));ep1.classList.toggle("on",eq([1,2,3,4,5]));ep2.classList.toggle("on",eq([6,0]));
- edc.innerHTML=EORD.map(d=>'<label><input type="checkbox" data-d="'+d+'"'+(EDAYS[d]?" checked":"")+'> '+EN_D[d].slice(0,3)+'</label>').join("")}
+ edc.innerHTML=EORD.map(d=>'<label><input type="checkbox" data-d="'+d+'"'+(EDAYS[d]?" checked":"")+'> '+esc(eDay(d,true))+'</label>').join("")}
+function epgRefresh(){epgStatic();epgUI();buildForm();renderNext();renderViews();updNP()}
 function epgSet(f){f();eSave();epgUI();renderViews()}
 el0.onclick=()=>epgSet(()=>EMODE="day");el1.onclick=()=>epgSet(()=>EMODE="strip");ed0.onclick=()=>epgSet(()=>ELAB="short");ed1.onclick=()=>epgSet(()=>ELAB="long");
 ep0.onclick=()=>epgSet(()=>EDAYS=[true,true,true,true,true,true,true]);ep1.onclick=()=>epgSet(()=>EDAYS=[0,1,2,3,4,5,6].map(d=>d>=1&&d<=5));ep2.onclick=()=>epgSet(()=>EDAYS=[0,1,2,3,4,5,6].map(d=>d==6||d==0));
@@ -623,6 +694,6 @@ edc.onchange=e=>{const t=e.target;if(t.dataset.d===undefined)return;epgSet(()=>{
 epgUI();
 function setEF(v){EF=v;try{localStorage.setItem("hef",v)}catch(e){}ef24.classList.toggle("on",v==24);ef12.classList.toggle("on",v==12);renderViews();renderNext();updNP()}
 ef24.onclick=()=>setEF(24);ef12.onclick=()=>setEF(12);
-window.addEventListener("hashchange",route);route();updNP();setEF(EF);
+window.epgReady=true;epgRefresh();window.addEventListener("hashchange",route);route();updNP();setEF(EF);
 setInterval(()=>{updNP();if(!pgSched.hidden){renderNext();if(++SK%20==0)renderViews()}},1000);
 </script></body></html>
